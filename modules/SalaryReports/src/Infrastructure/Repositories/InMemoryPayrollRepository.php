@@ -35,7 +35,9 @@ class InMemoryPayrollRepository implements PayrollRepositoryInterface
         $items = new Collection($this->getPayrollData()->getItems());
 
         $filtered = $items->filter(function (PayrollItem $item) use ($search) {
-            return Str::contains($item->getDepartment()->getName(), $search, true);
+            return Str::contains($item->getDepartment()->getName(), $search, true)
+                || Str::contains($item->getEmployee()->getFirstName(), $search, true)
+                || Str::contains($item->getEmployee()->getLastName(), $search, true);
         });
 
         return PayrollData::createFromItems($filtered->all());
