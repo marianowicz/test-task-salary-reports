@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SalaryReports\Infrastructure\Repositories;
 
 use Illuminate\Database\DatabaseManager;
+use SalaryReports\Domain\DTO\SearchParams;
 use SalaryReports\Domain\PayrollData;
 use SalaryReports\Domain\Repositories\PayrollRepositoryInterface;
 
@@ -17,7 +18,7 @@ class IlluminateDatabasePayrollRepository implements PayrollRepositoryInterface
         $this->db = $db;
     }
 
-    public function getPayrollData(string $search = ''): PayrollData
+    public function getPayrollData(SearchParams $searchParams): PayrollData
     {
         // TODO: Implement getPayrollData() method.
     }

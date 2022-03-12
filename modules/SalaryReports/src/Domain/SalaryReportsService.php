@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SalaryReports\Domain;
 
+use SalaryReports\Domain\DTO\SearchParams;
 use SalaryReports\Domain\Entities\SalaryReportItem;
 use SalaryReports\Domain\Factories\AllowanceFactory;
 use SalaryReports\Domain\Repositories\PayrollRepositoryInterface;
@@ -19,10 +20,10 @@ class SalaryReportsService
         $this->allowanceFactory = $allowanceFactory;
     }
 
-    public function generateReport(string $search = ''): SalaryReport
+    public function generateReport(SearchParams $searchParams): SalaryReport
     {
         $salaryReport = new SalaryReport();
-        foreach ($this->payrollRepository->getPayrollData($search)->getItems() as $payrollItem) {
+        foreach ($this->payrollRepository->getPayrollData($searchParams)->getItems() as $payrollItem) {
             $salaryReport->addItem(new SalaryReportItem(
                 $payrollItem->getEmployee(),
                 $payrollItem->getDepartment()->getName(),

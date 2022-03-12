@@ -6,6 +6,7 @@ namespace SalaryReports\Infrastructure\Repositories;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use SalaryReports\Domain\DTO\SearchParams;
 use SalaryReports\Domain\Entities\PayrollItem;
 use SalaryReports\Domain\PayrollData;
 use SalaryReports\Domain\Entities\Department;
@@ -26,13 +27,14 @@ class InMemoryPayrollRepository implements PayrollRepositoryInterface
         $this->payrollData->addItem(new PayrollItem($employee, $department));
     }
 
-    public function getPayrollData(string $search = ''): PayrollData
+    public function getPayrollData(SearchParams $searchParams): PayrollData
     {
+        $search = $searchParams->getSearch();
         if (!$search) {
             return $this->payrollData;
         }
 
-        $items = new Collection($this->getPayrollData()->getItems());
+        $items = new Collection($this->payrollData->getItems());
 
         $filtered = $items->filter(function (PayrollItem $item) use ($search) {
             return Str::contains($item->getDepartment()->getName(), $search, true)
