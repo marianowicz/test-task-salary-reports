@@ -94,4 +94,25 @@ class SalaryReportsServiceTest extends TestCase
             $items[1]->getTotalSalary(),
         ]);
     }
+
+    /** @test */
+    public function it_can_search_items_by_department_name()
+    {
+        $this->payrollRepository->addItem(
+            new Employee(1, 'Adam', 'Kowalski', Carbon::now()->subYears(15), 1000.0),
+            new Department(1, 'HR', 'seniority', 100.0)
+        );
+
+        $this->payrollRepository->addItem(
+            new Employee(2, 'Ania', 'Nowak', Carbon::now()->subYears(5), 1100.0),
+            new Department(2, 'Customer Service', 'percentage', 10.0)
+        );
+
+        $this->salaryReportsService = new SalaryReportsService($this->payrollRepository, new AllowanceFactory());
+
+        $report = $this->salaryReportsService->generateReport('HR');
+        $items = $report->getItems();
+        $this->assertCount(1, $items);
+        $this->assertSame('Kowalski', $items[0]->getLastName());
+    }
 }

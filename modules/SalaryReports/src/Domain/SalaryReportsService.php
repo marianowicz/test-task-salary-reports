@@ -19,10 +19,10 @@ class SalaryReportsService
         $this->allowanceFactory = $allowanceFactory;
     }
 
-    public function generateReport(): SalaryReport
+    public function generateReport(string $search = ''): SalaryReport
     {
         $salaryReport = new SalaryReport();
-        foreach ($this->payrollRepository->getPayrollData()->getItems() as $payrollItem) {
+        foreach ($this->payrollRepository->getPayrollData($search)->getItems() as $payrollItem) {
             $salaryReport->addItem(new SalaryReportItem(
                 $payrollItem->getEmployee(),
                 $payrollItem->getDepartment()->getName(),

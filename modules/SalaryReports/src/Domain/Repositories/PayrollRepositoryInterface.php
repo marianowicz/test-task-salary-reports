@@ -8,5 +8,5 @@ use SalaryReports\Domain\PayrollData;
 
 interface PayrollRepositoryInterface
 {
-    public function getPayrollData(): PayrollData;
+    public function getPayrollData(string $search = ''): PayrollData;
 }

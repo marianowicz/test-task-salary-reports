@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SalaryReports\Infrastructure\Repositories;
 
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use SalaryReports\Domain\Entities\PayrollItem;
 use SalaryReports\Domain\PayrollData;
 use SalaryReports\Domain\Entities\Department;
@@ -24,8 +26,18 @@ class InMemoryPayrollRepository implements PayrollRepositoryInterface
         $this->payrollData->addItem(new PayrollItem($employee, $department));
     }
 
-    public function getPayrollData(): PayrollData
+    public function getPayrollData(string $search = ''): PayrollData
     {
-        return $this->payrollData;
+        if (!$search) {
+            return $this->payrollData;
+        }
+
+        $items = new Collection($this->getPayrollData()->getItems());
+
+        $filtered = $items->filter(function (PayrollItem $item) use ($search) {
+            return Str::contains($item->getDepartment()->getName(), $search, true);
+        });
+
+        return PayrollData::createFromItems($filtered->all());
     }
 }

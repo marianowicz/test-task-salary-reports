@@ -18,4 +18,14 @@ class PayrollData
     {
         return $this->items;
     }
+
+    public static function createFromItems(array $items): PayrollData
+    {
+        $data = new static;
+        foreach ($items as $item) {
+            $data->addItem($item);
+        }
+
+        return $data;
+    }
 }

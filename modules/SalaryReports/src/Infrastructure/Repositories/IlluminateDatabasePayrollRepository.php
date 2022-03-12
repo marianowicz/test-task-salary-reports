@@ -17,7 +17,7 @@ class IlluminateDatabasePayrollRepository implements PayrollRepositoryInterface
         $this->db = $db;
     }
 
-    public function getPayrollData(): PayrollData
+    public function getPayrollData(string $search = ''): PayrollData
     {
         // TODO: Implement getPayrollData() method.
     }
