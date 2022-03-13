@@ -8,13 +8,31 @@ class SearchParams
 {
     private ?string $search = null;
     private ?string $sortBy = null;
-    private string $sortDirection = 'ASC';
+    private bool $sortDescending = false;
 
-    public function __construct(?string $search = null, ?string $sortBy = null, string $sortDirection = 'ASC')
+    public function setSearch(string $search): self
     {
         $this->search = $search;
-        $this->sortBy = $sortBy;
-        $this->sortDirection = $sortDirection;
+
+        return $this;
+    }
+
+    public function setSortBy(string $columnName, ?bool $descending = false): self
+    {
+        $this->sortBy = $columnName;
+        $this->sortDescending = $descending;
+
+        return $this;
+    }
+
+    public function shouldSort(): bool
+    {
+        return is_string($this->sortBy);
+    }
+
+    public function shouldSearch(): bool
+    {
+        return !is_null($this->search) && strlen($this->search) > 0;
     }
 
     public function getSearch(): ?string
@@ -22,13 +40,13 @@ class SearchParams
         return $this->search;
     }
 
-    public function getSortBy(): ?string
+    public function getSortBy(): string
     {
         return $this->sortBy;
     }
 
-    public function getSortDirection(): string
+    public function shouldSortDescending(): bool
     {
-        return $this->sortDirection;
+        return $this->sortDescending;
     }
 }

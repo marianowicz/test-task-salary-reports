@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace SalaryReports\Domain\Exceptions;
 
-use UnexpectedValueException;
+use InvalidArgumentException;
 
-class NegativeAllowanceValueException extends UnexpectedValueException
+class NegativeAllowanceValueException extends InvalidArgumentException
 {
 
 }

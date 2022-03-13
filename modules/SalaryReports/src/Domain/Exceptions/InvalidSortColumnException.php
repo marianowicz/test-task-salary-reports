@@ -6,7 +6,7 @@ namespace SalaryReports\Domain\Exceptions;
 
 use InvalidArgumentException;
 
-class InvalidAllowanceTypeException extends InvalidArgumentException
+class InvalidSortColumnException extends InvalidArgumentException
 {
 
 }

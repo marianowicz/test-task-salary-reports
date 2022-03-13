@@ -34,6 +34,14 @@ class SalaryReportsService
             ));
         }
 
+        /**
+         * @TODO static columns can be sorted on the db level, dynamic only here;
+         *       for now I sort everything as if all columns were dynamic
+         */
+        if ($searchParams->shouldSort()) {
+            $salaryReport->sortBy($searchParams->getSortBy(), $searchParams->shouldSortDescending());
+        }
+
         return $salaryReport;
     }
 }

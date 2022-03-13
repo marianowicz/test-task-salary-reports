@@ -29,13 +29,12 @@ class InMemoryPayrollRepository implements PayrollRepositoryInterface
 
     public function getPayrollData(SearchParams $searchParams): PayrollData
     {
-        $search = $searchParams->getSearch();
-        if (!$search) {
+        if (!$searchParams->shouldSearch()) {
             return $this->payrollData;
         }
 
         $items = new Collection($this->payrollData->getItems());
-
+        $search = $searchParams->getSearch();
         $filtered = $items->filter(function (PayrollItem $item) use ($search) {
             return Str::contains($item->getDepartment()->getName(), $search, true)
                 || Str::contains($item->getEmployee()->getFirstName(), $search, true)
