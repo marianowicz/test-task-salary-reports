@@ -52,4 +52,35 @@ layer in the form of the PayloadData class. In fact the Employee
 and Department classes are not needed there, we could use primitives.
 * The solution is a bit over-engineered, but I wanted to show
 how I approach building classes, messaging between them, TDD and
-tests (including module tests and in-memory repository implementation) 
+tests (including module tests and in-memory repository implementation)
+* Please look at @TODO blocks that I've added in the code. Let's discuss them! 
+
+<h2>Installation and running the command</h2>
+
+**Installation**
+<pre>
+cp .env.example .env
+
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v $(pwd):/var/www/html \
+    -w /var/www/html \
+    laravelsail/php81-composer:latest \
+    composer install --ignore-platform-reqs
+    
+./vendor/bin/sail up           
+</pre>
+
+**Running tests**
+<pre>
+./vendor/bin/sail phpunit
+</pre>
+
+**Preparing the data and running the command**
+<pre>
+./vendor/bin/sail artisan migrate
+./vendor/bin/sail artisan db:seed
+./vendor/bin/sail artisan help salary-report:generate
+./vendor/bin/sail artisan salary-report:generate --search=Customer --sort=TotalSalary --descending
+</pre>
+
