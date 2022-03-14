@@ -1,64 +1,55 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+*Translated by Google Translate, sorry for the inconsistencies in naming*
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<h2>Task description - Salary Reports</h2>
 
-## About Laravel
+<h3>Introduction</h3>
+The XYZ company is a corporation whose employees are assigned to specific departments.
+Every employee may be a member of only one department. Depending on the seniority (number of worked
+years in XYZ) and the department in which the employee works, an allowance is added to the base salary.
+The allowance to the basic salary can be expressed in two ways:
+1. A fixed amount is added to the basic salary for each year of work (up to the first 10 years work)
+2. Percentage - the value is given as a percentage, different for each department 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Examples:**
+1. Adam Kowalski from the HR department has been working at XYZ for 15 years. His basic salary is $1000. The HR department is entitled to an allowance of $ 100 for each year of service. Including the allowance (for the first 10 years of work), his monthly salary is therefore $2000.
+2. Ania Nowak has been working in the customer service department for 5 years. Her basic salary is $1,100. Customer Service has a bonus of 10%. Her monthly salary is therefore $1210.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<h3>Task</h3>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Create a command or controller that generates a payroll report in the company (for the current month).
+The report should include:
+* Name
+* Surname
+* Department
+* Base of Remuneration (amount)
+* Base supplement (amount)
+* Additive type (% or constant type)
+* Remuneration with an allowance (amount)
 
-## Learning Laravel
+The results must be sortable by any column (one at a time).
+The results must be filterable by department, first name and last name. 
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<h3>Assumptions</h3>
+* New sections can be added (can be by hand made INSERT to the table)
+* New employees can be added (can be by hand made INSERT to
+table)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+<h3>Requirements</h3>
+* The solution must be written using the Symfony or Laravel framework (any)
+* The application must be able to start, its code must be executed, and the calculation results must be correct
+* The written application should be placed in the git repository (GitHub, BitBucket or similar) and the link to the repository passed to the person sending the task
 
-## Laravel Sponsors
+<h2>My thoughts on the task (worth taking consideration when you assess my solution)</h2>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* I've spent about 10 hours, probably much more than I initially assumed
+* I wanted to reflect some real life situation in a modular monolith, hence
+I've put the code in its own module. There are some more things
+that could be put in the module (the requested command + service provider) 
+* Since there were no requirements about the database structure,
+I assumed the simplest case. In real life it would not be that
+straightforward, and that's why there is an anti-corruption
+layer in the form of the PayloadData class. In fact the Employee
+and Department classes are not needed there, we could use primitives.
+* The solution is a bit over-engineered, but I wanted to show
+how I approach building classes, messaging between them, TDD and
+tests (including module tests and in-memory repository implementation) 
