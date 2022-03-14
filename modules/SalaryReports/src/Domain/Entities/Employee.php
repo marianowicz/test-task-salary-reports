@@ -20,7 +20,7 @@ class Employee
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->joinedAt = $joinedAt;
-        $this->baseSalary = $baseSalary;
+        $this->baseSalary = $baseSalary; // @TODO should we use Money instead?
     }
 
     public function getFirstName(): string

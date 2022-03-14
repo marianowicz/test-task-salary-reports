@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace SalaryReports\Domain\Exceptions;
 
-use InvalidArgumentException;
-
-class InvalidAllowanceTypeException extends InvalidArgumentException
+class InvalidAllowanceTypeException extends SalaryReportException
 {
 
 }

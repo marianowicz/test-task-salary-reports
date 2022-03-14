@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use SalaryReports\Domain\Repositories\PayrollRepositoryInterface;
+use SalaryReports\Infrastructure\Repositories\IlluminateDatabasePayrollRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // @TODO this should be in a service provider within the SalaryReports module
+        $this->app->bind(PayrollRepositoryInterface::class, IlluminateDatabasePayrollRepository::class);
     }
 
     /**

@@ -47,16 +47,17 @@ class SalaryReport
 
         $items = new Collection($this->items);
         $this->items = $items->sortBy(function(SalaryReportItem $item) use ($getterMethod, $descending) {
-            return $item->{$getterMethod}(); // @TODO ouch, that's tricky... - think if this should not be replaced by something else...
+            return $item->{$getterMethod}(); // @TODO think if this can be replaced by something else...
         }, SORT_REGULAR, $descending)->values()->all();
     }
 
     private function determineGetterMethod(string $columnName): string
     {
         if (!in_array($columnName, self::AVAILABLE_SORT_COLUMNS)) {
-            throw new InvalidSortColumnException();
+            throw new InvalidSortColumnException('Report can be sorted only by: FirstName, LastName,' .
+                ' DepartmentName, BaseSalary, AllowanceAmount, AllowanceType, TotalSalary');
         }
 
-        return 'get' . $columnName; // @TODO see above
+        return 'get' . $columnName; // @TODO that's tricky, see above
     }
 }

@@ -19,7 +19,7 @@ class AllowanceFactory
     {
         // @TODO in fact this might be a part of PercentageAllowance / SeniorityAllowance validation
         if ($allowanceValue < 0) {
-            throw new NegativeAllowanceValueException();
+            throw new NegativeAllowanceValueException('Allowance value cannot be negative');
         }
 
         switch ($allowanceType) {
@@ -28,7 +28,7 @@ class AllowanceFactory
             case self::SENIORITY:
                 return new SeniorityAllowance($allowanceValue);
             default:
-                throw new InvalidAllowanceTypeException();
+                throw new InvalidAllowanceTypeException('Invalid allowance type, allowed values are: percentage, seniority');
         }
     }
 }
